@@ -29,8 +29,25 @@ jobs:
           command: |
             ansible-playbook -i inventory playbook.yml
 
+  smoke-test:
+    docker:
+      - image: alpine:latest
+    steps:
+      - run: apk add --update curl
+      - run:
+          name: smoke test
+          command: |
+            URL="http://52.90.225.200:3000/"
+            # Test if website exists
+            if curl -s --head ${URL} 
+            then
+              return 0
+            else
+              return 1
+            fi
 workflows:
   default:
     jobs:
       # - create-infrastructure
-      - configure-infrastructure
+      # - configure-infrastructure
+      - smoke-test
