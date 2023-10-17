@@ -37,4 +37,5 @@ jobs:
 workflows:
   default:
     jobs:
-      - create-infrastructure
+      # - create-infrastructure
+      - configure-infrastructure
