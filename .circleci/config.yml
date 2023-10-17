@@ -43,7 +43,7 @@ jobs:
 
   smoke-test:
     docker:
-      - image: alpine:latest
+      - image: cimg/aws:2023.09
     steps:
       - run: apk add --update curl
       - run:
