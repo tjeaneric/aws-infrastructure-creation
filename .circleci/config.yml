@@ -33,6 +33,10 @@ jobs:
           # You can get this ID in the section where you registered the SSH Key
           fingerprints: ["b8:c5:61:9f:39:b1:05:fe:8e:af:67:9a:3e:0b:d6:46"]
       - run:
+          name: Intentional fail to test rollback
+          command: |
+            return 1
+      - run:
           name: Install Ansible
           command: |
             pip install ansible # Install Ansible
@@ -40,10 +44,11 @@ jobs:
           name: Run Playbook and Configure server
           command: |
             ansible-playbook -i inventory playbook.yml
+      - destroy-environment
 
   smoke-test:
     docker:
-      - image: cimg/aws:2023.09
+      - image: alpine:latest
     steps:
       - run: apk add --update curl
       - run:
@@ -62,7 +67,7 @@ jobs:
 workflows:
   default:
     jobs:
-      # - create-infrastructure
+      - create-infrastructure
       - configure-infrastructure
       - smoke-test:
           requires: [configure-infrastructure]
