@@ -19,7 +19,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           # You can get this ID in the section where you registered the SSH Key
-          fingerprints: ["13:9c:73:cf:5b:85:ec:c5:71:0a:38:01:e0:0d:d3:99"]
+          fingerprints: ["b8:c5:61:9f:39:b1:05:fe:8e:af:67:9a:3e:0b:d6:46"]
       - run:
           name: Install Ansible
           command: |
@@ -28,11 +28,6 @@ jobs:
           name: Run Playbook and Configure server
           command: |
             ansible-playbook -i inventory playbook.yml
-      - run:
-          name: "Create EC2 Instance from cloudformation template"
-          command: "aws cloudformation deploy \
-            --template-file template.yml \
-            --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}"
 
 workflows:
   default:
