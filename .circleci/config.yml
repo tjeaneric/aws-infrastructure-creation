@@ -2,7 +2,7 @@ version: 2.1
 
 commands:
   # Exercise - Rollback
-  destroy_environment:
+  destroy-environment:
     steps:
       - run:
           name: Destroy environment
@@ -51,12 +51,14 @@ jobs:
           command: |
             URL="http://52.90.225.200:3000/"
             # Test if website exists
-            if curl -s --head ${URL} 
+            if curl --connect-timeout 5 -s --head ${URL} 
             then
               return 0
             else
               return 1
             fi
+      - destroy-environment
+
 workflows:
   default:
     jobs:
